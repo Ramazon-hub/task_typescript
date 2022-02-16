@@ -1,4 +1,5 @@
 import path from "path"
+import fs from 'fs'
 import uuid from "uuid"
 import { Request } from 'express'
 import multer, { FileFilterCallback } from 'multer'
@@ -19,7 +20,13 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({
   storage: fileStorageEngine
 });
-module.exports = {
-  upload,filename
+const deleteFile =(file: string) => {
+  fs.unlink(path.join(__dirname, "../uploads", file), (er) => {
+    if(er)return console.log(er);
+
+  });
+}
+export  {
+  upload,filename,deleteFile
   
-};
+}

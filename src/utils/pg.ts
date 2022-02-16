@@ -1,7 +1,7 @@
 import config from "../config";
 import { Pool } from "pg";
 
-const pool = new Pool({ connectionString: config.DB_URL });
+const pool = new Pool({ connectionString: config.DB_ONLINE_URL });
 
 const fetch = async (SQL: string, params: any) => {
   const client = await pool.connect();

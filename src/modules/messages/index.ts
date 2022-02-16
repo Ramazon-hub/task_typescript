@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { deleteFile } from "utils/upload";
 import eventEmitter from "../../utils/events";
 import { deleteMessage, getMessages, newMessage } from "./model";
 
@@ -34,7 +35,7 @@ export default {
       );
 
       if (!createMessage) {
-        // File.fileDelete(filename);
+        deleteFile(filename)
 
         return res.status(500).json({ message: "Message noi=t created!" });
       }
@@ -58,9 +59,9 @@ export default {
 
       res.status(200).json({ message: "DELETED", data: deletedMessage });
 
-      // eventEmitter.emit("DELETED_MESSAGE", deletedMessage);
+      eventEmitter.emit("deleteMessage", deletedMessage);
 
-      // File.fileDelete(deletedMessage.file);
+      deleteFile(deletedMessage.file);
     } catch (error) {
       res.status(500).json({ message: `SERVER_ERROR!` });
     }
